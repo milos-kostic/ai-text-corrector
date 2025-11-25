@@ -1,0 +1,61 @@
+[
+  {
+    "test_name": "Kratak tekst",
+    "text_length": 500,
+    "response_time_ms": 2310.11,
+    "success": true,
+    "status_code": 200,
+    "corrected_length": 438,
+    "changed": true,
+    "timestamp": "2025-11-22T18:32:52.724539"
+  },
+  {
+    "test_name": "Srednji tekst",
+    "text_length": 5000,
+    "response_time_ms": 2054.55,
+    "success": true,
+    "status_code": 200,
+    "corrected_length": 4324,
+    "changed": true,
+    "timestamp": "2025-11-22T18:32:54.787571"
+  },
+  {
+    "test_name": "Dug tekst",
+    "text_length": 10000,
+    "response_time_ms": 2118.71,
+    "success": true,
+    "status_code": 200,
+    "corrected_length": 8649,
+    "changed": true,
+    "timestamp": "2025-11-22T18:32:56.906281"
+  },
+  {
+    "test_name": "Veoma dug tekst",
+    "text_length": 25000,
+    "response_time_ms": 2085.01,
+    "success": true,
+    "status_code": 200,
+    "corrected_length": 21605,
+    "changed": true,
+    "timestamp": "2025-11-22T18:32:58.992263"
+  },
+  {
+    "test_name": "Ekstremno dug tekst",
+    "text_length": 50000,
+    "response_time_ms": 2238.33,
+    "success": true,
+    "status_code": 200,
+    "corrected_length": 43208,
+    "changed": true,
+    "timestamp": "2025-11-22T18:33:01.231565"
+  },
+  {
+    "test_type": "memory_usage",
+    "total_requests": 50,
+    "successful_requests": 50,
+    "avg_response_time_ms": 2053.71,
+    "max_response_time_ms": 2103.06,
+    "min_response_time_ms": 2019.82,
+    "timestamp": "2025-11-22T18:34:43.953636"
+  }
+]

@@ -1,0 +1,141 @@
+{
+  "timestamp": "2025-11-25T01:30:24.803566",
+  "summary": {
+    "total": 18,
+    "passed": 18,
+    "success_rate": 100.0,
+    "by_category": {
+      "is_are_agreement": "8/8",
+      "missing_articles": "7/7",
+      "combined": "3/3"
+    }
+  },
+  "results": [
+    {
+      "description": "this + are → this + is",
+      "input": "this are wrong",
+      "expected": "This is wrong",
+      "actual": "This is wrong",
+      "passed": true
+    },
+    {
+      "description": "that + are → that + is",
+      "input": "that are correct",
+      "expected": "That is correct",
+      "actual": "That is correct",
+      "passed": true
+    },
+    {
+      "description": "this + were → this + was",
+      "input": "this were bad",
+      "expected": "This was bad",
+      "actual": "This was bad",
+      "passed": true
+    },
+    {
+      "description": "that + were → that + was",
+      "input": "that were good",
+      "expected": "That was good",
+      "actual": "That was good",
+      "passed": true
+    },
+    {
+      "description": "these + is → these + are",
+      "input": "these is wrong",
+      "expected": "These are wrong",
+      "actual": "These are wrong",
+      "passed": true
+    },
+    {
+      "description": "those + is → those + are",
+      "input": "those is correct",
+      "expected": "Those are correct",
+      "actual": "Those are correct",
+      "passed": true
+    },
+    {
+      "description": "these + was → these + were",
+      "input": "these was bad",
+      "expected": "These were bad",
+      "actual": "These were bad",
+      "passed": true
+    },
+    {
+      "description": "those + was → those + were",
+      "input": "those was good",
+      "expected": "Those were good",
+      "actual": "Those were good",
+      "passed": true
+    },
+    {
+      "description": "is + bad sentence → is a bad sentence",
+      "input": "this is bad sentence",
+      "expected": "This is a bad sentence",
+      "actual": "This is a bad sentence",
+      "passed": true
+    },
+    {
+      "description": "is + good idea → is a good idea",
+      "input": "that is good idea",
+      "expected": "That is a good idea",
+      "actual": "That is a good idea",
+      "passed": true
+    },
+    {
+      "description": "is + big problem → is a big problem",
+      "input": "it is big problem",
+      "expected": "It is a big problem",
+      "actual": "It is a big problem",
+      "passed": true
+    },
+    {
+      "description": "was + bad sentence → was a bad sentence",
+      "input": "this was bad sentence",
+      "expected": "This was a bad sentence",
+      "actual": "This was a bad sentence",
+      "passed": true
+    },
+    {
+      "description": "was + good idea → was a good idea",
+      "input": "it was good idea",
+      "expected": "It was a good idea",
+      "actual": "It was a good idea",
+      "passed": true
+    },
+    {
+      "description": "is + important → is an important",
+      "input": "this is important issue",
+      "expected": "This is an important issue",
+      "actual": "This is an important issue",
+      "passed": true
+    },
+    {
+      "description": "was + easy → was an easy",
+      "input": "that was easy task",
+      "expected": "That was an easy task",
+      "actual": "That was an easy task",
+      "passed": true
+    },
+    {
+      "description": "this are → this is + add 'a'",
+      "input": "this are bad sentence",
+      "expected": "This is a bad sentence",
+      "actual": "This is a bad sentence",
+      "passed": true
+    },
+    {
+      "description": "these is → these are + add 'a'",
+      "input": "these is good idea",
+      "expected": "These are a good idea",
+      "actual": "These are a good idea",
+      "passed": true
+    },
+    {
+      "description": "Real mistake: this are + no article",
+      "input": "this are terrible mistake",
+      "expected": "This is a terrible mistake",
+      "actual": "This is a terrible mistake",
+      "passed": true
+    }
+  ]
+}

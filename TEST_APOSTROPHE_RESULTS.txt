@@ -1,0 +1,26 @@
+=== APOSTROPHE NORMALIZATION TEST - 2025-11-25 19:11:54.627882 ===
+PASSED: 16 | FAILED: 6 | TOTAL: 22
+SUCCESS RATE: 72.73%
+
+{"status": "✅ PASS", "description": "Standard apostrophe - should stay", "input": "It's fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Contraction apostrophe - should stay", "input": "Don't worry", "expected": "Don't worry", "actual": "Don't worry", "correct": true}
+{"status": "✅ PASS", "description": "Smart right single quote → standard", "input": "It's fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Smart left single quote → standard", "input": "It's fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Smart quotes in quotes", "input": "He said 'hello'", "expected": "He said 'hello'", "actual": "He said 'hello'", "correct": true}
+{"status": "✅ PASS", "description": "Malformed UTF-8 left quote", "input": "Itâ€˜s fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Malformed UTF-8 right quote", "input": "Itâ€™s fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Malformed UTF-8 in contraction", "input": "Donâ€˜t worry", "expected": "Don't worry", "actual": "Don't worry", "correct": true}
+{"status": "❌ FAIL", "description": "Double-encoded left quote", "input": "ItÃ¢â‚¬Ëœs fine", "expected": "It's fine", "actual": "Itã¢â'¬ëœs fine", "correct": false}
+{"status": "❌ FAIL", "description": "Double-encoded right quote", "input": "ItÃ¢â‚¬â„¢s fine", "expected": "It's fine", "actual": "Itã¢â'¬â„¢s fine", "correct": false}
+{"status": "❌ FAIL", "description": "Mojibake left quote pattern", "input": "Itã¢â‚¬ëœs fine", "expected": "It's fine", "actual": "Itã¢â'¬ëœs fine", "correct": false}
+{"status": "❌ FAIL", "description": "Mojibake right quote pattern", "input": "Itã¢â‚¬â\"¢s fine", "expected": "It's fine", "actual": "Itã¢â'¬â\"¢s fine", "correct": false}
+{"status": "❌ FAIL", "description": "Mojibake possessive", "input": "Userã¢â‚¬â\"¢s data", "expected": "User's data", "actual": "Userã¢â'¬â\"¢s data", "correct": false}
+{"status": "❌ FAIL", "description": "Double-encoded possessive", "input": "UserÃ¢â‚¬â„¢s data", "expected": "User's data", "actual": "Userã¢â'¬â„¢s data", "correct": false}
+{"status": "✅ PASS", "description": "Acute accent → apostrophe", "input": "Don't worry", "expected": "Don't worry", "actual": "Don't worry", "correct": true}
+{"status": "✅ PASS", "description": "Grave accent → apostrophe", "input": "We`ll see", "expected": "We'll see", "actual": "We'll see", "correct": true}
+{"status": "✅ PASS", "description": "Mixed malformed patterns", "input": "Itâ€˜s don't problem", "expected": "It's don't problem", "actual": "It's don't problem", "correct": true}
+{"status": "✅ PASS", "description": "Smart double quotes → standard", "input": "He said \"hello\"", "expected": "He said \"hello\"", "actual": "He said \"hello\"", "correct": true}
+{"status": "✅ PASS", "description": "Smart double quotes → standard", "input": "He said \"hello\"", "expected": "He said \"hello\"", "actual": "He said \"hello\"", "correct": true}
+{"status": "✅ PASS", "description": "Single quotes at boundaries", "input": "'Single quoted'", "expected": "'Single quoted'", "actual": "'Single quoted'", "correct": true}
+{"status": "✅ PASS", "description": "Double quotes at boundaries", "input": "\"Double quoted\"", "expected": "\"Double quoted\"", "actual": "\"Double quoted\"", "correct": true}
+{"status": "✅ PASS", "description": "Multiple malformed apostrophes", "input": "Itâ€˜s a testâ€™s result", "expected": "It's a test's result", "actual": "It's a test's result", "correct": true}

@@ -1,0 +1,31 @@
+=== BASIC TEST RESULTS - 2025-11-25 19:56:36.456307 ===
+TOTAL: 28 | PASSED: 26 | SUCCESS: 92.86%
+
+{"test": "Whitespace normalization", "input": "Hello     world", "expected": "Hello world", "actual": "Hello world", "passed": true, "response_time": 11.73}
+{"test": "Tabs to single space", "input": "Hello\t\tworld", "expected": "Hello world", "actual": "Hello world", "passed": true, "response_time": 0.0}
+{"test": "Newline collapse", "input": "Hello\n\nworld", "expected": "Hello world", "actual": "Hello world", "passed": true, "response_time": 12.95}
+{"test": "Trim spaces", "input": "   hello world   ", "expected": "Hello world", "actual": "Hello world", "passed": true, "response_time": 16.81}
+{"test": "Zero-width removal", "input": "he​llo wor​ld", "expected": "Hello world", "actual": "Hello world", "passed": true, "response_time": 12.22}
+{"test": "Sentence capitalization", "input": "hello world. this is test", "expected": "Hello world. This is test", "actual": "Hello world. This is test", "passed": true, "response_time": 0.0}
+{"test": "Single sentence cap", "input": "hello there", "expected": "Hello there", "actual": "Hello there", "passed": true, "response_time": 11.72}
+{"test": "All caps fix", "input": "THIS IS TEXT", "expected": "This is text", "actual": "This is text", "passed": true, "response_time": 11.97}
+{"test": "Random casing", "input": "hElLo WoRLD", "expected": "Hello world", "actual": "Hello world", "passed": true, "response_time": 11.96}
+{"test": "Fix double period", "input": "Hello.. world", "expected": "Hello. world", "actual": "Hello. World", "passed": false, "response_time": 11.72}
+{"test": "Fix missing space", "input": "Hello,world", "expected": "Hello, world", "actual": "Hello, world", "passed": true, "response_time": 11.72}
+{"test": "Fix repeated punctuation", "input": "Hello!!! world??", "expected": "Hello! world?", "actual": "Hello! World?", "passed": false, "response_time": 11.72}
+{"test": "Normalize apostrophes", "input": "It's fine", "expected": "It's fine", "actual": "It's fine", "passed": true, "response_time": 17.56}
+{"test": "Normalize smart quotes", "input": "It's working", "expected": "It's working", "actual": "It's working", "passed": true, "response_time": 0.0}
+{"test": "Normalize malformed UTF-8", "input": "Itâ€™s fixed", "expected": "It's fixed", "actual": "It's fixed", "passed": true, "response_time": 12.22}
+{"test": "Preserve URL", "input": "visit https://google.com now", "expected": "Visit https://google.com now", "actual": "Visit https://google.com now", "passed": true, "response_time": 11.72}
+{"test": "Preserve email", "input": "contact me at test@example.com", "expected": "Contact me at test@example.com", "actual": "Contact me at test@example.com", "passed": true, "response_time": 11.72}
+{"test": "Preserve hashtag", "input": "follow #python now", "expected": "Follow #python now", "actual": "Follow #python now", "passed": true, "response_time": 11.72}
+{"test": "Preserve mention", "input": "talk to @admin now", "expected": "Talk to @admin now", "actual": "Talk to @admin now", "passed": true, "response_time": 11.72}
+{"test": "Simple spelling", "input": "I beleive this is corect", "expected": "I believe this is correct", "actual": "I believe this is correct", "passed": true, "response_time": 11.72}
+{"test": "Grammar error", "input": "this are bad sentence", "expected": "This is a bad sentence", "actual": "This is a bad sentence", "passed": true, "response_time": 11.72}
+{"test": "Mixed casing + typo", "input": "thIS is terrble", "expected": "This is terrible", "actual": "This is terrible", "passed": true, "response_time": 0.0}
+{"test": "Empty string", "input": "", "expected": "", "actual": "", "passed": true, "response_time": 18.04}
+{"test": "Only spaces", "input": "     ", "expected": "", "actual": "", "passed": true, "response_time": 0.0}
+{"test": "Numbers preserved", "input": "price is 123$", "expected": "Price is 123$", "actual": "Price is 123$", "passed": true, "response_time": 12.23}
+{"test": "Emoji preservation", "input": "hello 😃 world", "expected": "Hello 😃 world", "actual": "Hello 😃 world", "passed": true, "response_time": 11.72}
+{"test": "Already correct", "input": "Hello world.", "expected": "Hello world.", "actual": "Hello world.", "passed": true, "response_time": 11.72}
+{"test": "Complex punctuation", "input": "this is. a test.. ok?", "expected": "This is. A test. Ok?", "actual": "This is. A test. Ok?", "passed": true, "response_time": 11.72}

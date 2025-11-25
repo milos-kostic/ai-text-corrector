@@ -1,0 +1,33 @@
+================================================================================
+SPECIFIC TESTS - EXECUTION RESULTS
+Generated: 2025-11-25 14:52:24.683964
+================================================================================
+
+
+============================================================
+TEST: tests/test_edge_cases.py
+STATUS: FAILED
+SUCCESS RATE: Unknown
+TIME: 0.53s
+============================================================
+
+STDOUT:
+
+=== TESTING EDGE CASES ===
+
+Running edge case tests...
+
+
+
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\Rad\Desktop\ai_text_corrector\tests\test_edge_cases.py", line 225, in <module>
+    main()
+  File "C:\Users\Rad\Desktop\ai_text_corrector\tests\test_edge_cases.py", line 143, in main
+    print(f"{status} | {description}")
+  File "C:\Users\Rad\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>
+
+

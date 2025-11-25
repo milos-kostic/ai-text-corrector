@@ -1,0 +1,15 @@
+=== CONTEXTUAL SPELLING TEST - 2025-11-25 16:53:41.283490 ===
+PASSED: 11 | FAILED: 0 | TOTAL: 11
+SUCCESS RATE: 100.0%
+
+{"status": "✅ PASS", "description": "THEIR (possessive + noun) - should stay 'their'", "input": "this is their car", "expected": "This is their car", "actual": "This is their car", "correct": true}
+{"status": "✅ PASS", "description": "THEIR → THEY'RE (before verb)", "input": "their going to school", "expected": "They're going to school", "actual": "They're going to school", "correct": true}
+{"status": "✅ PASS", "description": "THERE (location/existential) - should stay 'there'", "input": "there is a problem", "expected": "There is a problem", "actual": "There is a problem", "correct": true}
+{"status": "✅ PASS", "description": "THERE (location) - should stay 'there'", "input": "over there by the tree", "expected": "Over there by the tree", "actual": "Over there by the tree", "correct": true}
+{"status": "✅ PASS", "description": "THEY'RE (contraction) - should stay 'they're'", "input": "they're happy today", "expected": "They're happy today", "actual": "They're happy today", "correct": true}
+{"status": "✅ PASS", "description": "YOUR (possessive + noun) - should stay 'your'", "input": "this is your book", "expected": "This is your book", "actual": "This is your book", "correct": true}
+{"status": "✅ PASS", "description": "YOUR → YOU'RE (before verb)", "input": "your going to like this", "expected": "You're going to like this", "actual": "You're going to like this", "correct": true}
+{"status": "✅ PASS", "description": "YOU'RE (contraction) - should stay 'you're'", "input": "you're awesome", "expected": "You're awesome", "actual": "You're awesome", "correct": true}
+{"status": "✅ PASS", "description": "YOUR (possessive) - should stay 'your'", "input": "take your time", "expected": "Take your time", "actual": "Take your time", "correct": true}
+{"status": "✅ PASS", "description": "THEIR → THEY'RE (before adjective)", "input": "their happy", "expected": "They're happy", "actual": "They're happy", "correct": true}
+{"status": "✅ PASS", "description": "YOUR → YOU'RE (set phrase)", "input": "your welcome", "expected": "You're welcome", "actual": "You're welcome", "correct": true}

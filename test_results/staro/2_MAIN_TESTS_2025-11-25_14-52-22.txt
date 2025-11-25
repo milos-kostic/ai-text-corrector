@@ -1,0 +1,469 @@
+================================================================================
+MAIN TEST SUITES - SOURCE CODE
+Generated: 2025-11-25 14:52:24.674197
+================================================================================
+
+
+============================================================
+FILE: tests/test_basic.py
+============================================================
+
+import requests
+import json
+import time
+from datetime import datetime
+
+API_URL = "http://127.0.0.1:5000/correct"
+OUTPUT_FILE = "TEST_BASIC_RESULTS.txt"
+
+
+def request_api(text):
+    """Poziva /correct endpoint i meri vreme."""
+    start = time.time()
+    try:
+        r = requests.post(API_URL, json={"text": text})
+        ms = round((time.time() - start) * 1000, 2)
+
+        if r.status_code != 200:
+            return None, ms, f"HTTP {r.status_code}: {r.text}"
+
+        data = r.json()
+        return data.get("corrected", ""), ms, None
+
+    except Exception as e:
+        return None, 0, str(e)
+
+
+def run_test(name, input_text, expected):
+    """Izvršava jedan test slučaj."""
+    actual, rt, error = request_api(input_text)
+
+    if error:
+        return {
+            "test": name,
+            "input": input_text,
+            "expected": expected,
+            "actual": error,
+            "passed": False,
+            "response_time": rt
+        }
+
+    return {
+        "test": name,
+        "input": input_text,
+        "expected": expected,
+        "actual": actual,
+        "passed": actual.strip() == expected.strip(),
+        "response_time": rt
+    }
+
+
+def save_results(results):
+    passed = sum(1 for r in results if r["passed"])
+    total = len(results)
+    success_rate = round((passed / total) * 100, 2)
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(f"=== BASIC TEST RESULTS - {datetime.now()} ===\n")
+        f.write(f"TOTAL: {total} | PASSED: {passed} | SUCCESS: {success_rate}%\n\n")
+
+        for r in results:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+    print(f"\n📄 Rezultati upisani u {OUTPUT_FILE}")
+    print(f"🎯 SUCCESS RATE: {success_rate}%\n")
+
+
+def main():
+    results = []
+
+    print("\n=== RUNNING BASIC TESTS ===\n")
+
+    # Sekcija 1 — BASIC input cleanup
+    BASIC_TESTS = [
+        ("Whitespace normalization", "Hello     world", "Hello world"),
+        ("Tabs to single space", "Hello\t\tworld", "Hello world"),
+        ("Newline collapse", "Hello\n\nworld", "Hello world"),
+        ("Trim spaces", "   hello world   ", "Hello world"),
+        ("Zero-width removal", "he\u200bllo wor\u200bld", "Hello world"),
+    ]
+
+    # Sekcija 2 — Capitalization
+    CAPITALIZATION_TESTS = [
+        ("Sentence capitalization", "hello world. this is test", "Hello world. This is test"),
+        ("Single sentence cap", "hello there", "Hello there"),
+        ("All caps fix", "THIS IS TEXT", "This is text"),
+        ("Random casing", "hElLo WoRLD", "Hello world"),
+    ]
+
+    # Sekcija 3 — Punctuation
+    PUNCT_TESTS = [
+        ("Fix double period", "Hello.. world", "Hello. world"),
+        ("Fix missing space", "Hello,world", "Hello, world"),
+        ("Fix repeated punctuation", "Hello!!! world??", "Hello! world?"),
+        ("Normalize apostrophes", "It's fine", "It's fine"),  # AŽURIRANO: sada će raditi
+        ("Normalize smart quotes", "It's working", "It's working"),  # NOVI TEST
+        ("Normalize malformed UTF-8", "Itâ€™s fixed", "It's fixed"),  # NOVI TEST
+    ]
+
+    # Sekcija 4 — Preservation (things that must NOT break)
+    PRESERVE_TESTS = [
+        ("Preserve URL", "visit https://google.com now", "Visit https://google.com now"),
+        ("Preserve email", "contact me at test@example.com", "Contact me at test@example.com"),
+        ("Preserve hashtag", "follow #python now", "Follow #python now"),
+        ("Preserve mention", "talk to @admin now", "Talk to @admin now"),
+    ]
+
+    # Sekcija 5 — Realistic grammar and spelling
+    REALISTIC_TESTS = [
+        ("Simple spelling", "I beleive this is corect", "I believe this is correct"),
+        ("Grammar error", "this are bad sentence", "This is a bad sentence"),
+        ("Mixed casing + typo", "thIS is terrble", "This is terrible"),
+    ]
+
+    # Sekcija 6 — Edge cases
+    EDGE_TESTS = [
+        ("Empty string", "", ""),
+        ("Only spaces", "     ", ""),
+        ("Numbers preserved", "price is 123$", "Price is 123$"),
+        ("Emoji preservation", "hello 😃 world", "Hello 😃 world"),
+    ]
+
+    # Sekcija 7 — Regression tests
+    REGRESSION_TESTS = [
+        ("Already correct", "Hello world.", "Hello world."),
+        ("Complex punctuation", "this is. a test.. ok?", "This is. A test. Ok?"),
+    ]
+
+    ALL = [
+        ("BASIC", BASIC_TESTS),
+        ("CAPITALIZATION", CAPITALIZATION_TESTS),
+        ("PUNCTUATION", PUNCT_TESTS),
+        ("PRESERVE", PRESERVE_TESTS),
+        ("REALISTIC", REALISTIC_TESTS),
+        ("EDGE CASES", EDGE_TESTS),
+        ("REGRESSION", REGRESSION_TESTS),
+    ]
+
+    for section_name, tests in ALL:
+        print(f"\n=== {section_name} ===")
+        for name, inp, exp in tests:
+            r = run_test(name, inp, exp)
+            results.append(r)
+            print(("✓" if r["passed"] else "✗"), name)
+
+    save_results(results)
+
+
+if __name__ == "__main__":
+    main()
+
+
+============================================================
+FILE: tests/test_spelling.py
+============================================================
+
+import requests
+import json
+import time
+from datetime import datetime
+
+API_URL = "http://127.0.0.1:5000/correct/spelling"
+OUTPUT_FILE = "TEST_SPELLING_RESULTS.txt"
+
+
+# =============================
+# Helper – normalizacija rezultata
+# =============================
+def normalize(s: str) -> str:
+    """
+    Normalizuje string tako da se poredi case-insensitive,
+    bez početnih/trailing space-ova.
+    """
+    if not isinstance(s, str):
+        return ""
+    return s.strip().lower()
+
+
+# =============================
+# Spelling test set
+# NOTE: Removed "their" and "your" - these are now handled by contextual_corrector
+# =============================
+SPELLING_TESTS = [
+    ("teh", "the"),
+    ("adress", "address"),
+    ("recieve", "receive"),
+    ("occurence", "occurrence"),
+    ("accomodate", "accommodate"),
+    ("definately", "definitely"),
+    ("seperate", "separate"),
+    ("wich", "which"),
+    ("becuase", "because"),
+    ("alot", "a lot"),
+    ("truely", "truly"),
+    ("goverment", "government"),
+    ("enviroment", "environment"),
+    ("untill", "until"),
+    ("wiches", "which"),
+    # REMOVED: ("their", "there") - now in contextual_corrector
+    # REMOVED: ("your", "you're") - now in contextual_corrector
+]
+
+CAPITALIZATION_TESTS = [
+    ("Teh", "The"),
+    ("TEH", "THE"),
+    ("Recieve", "Receive"),
+    ("GOVERMENT", "GOVERNMENT"),
+]
+
+SENTENCE_TESTS = [
+    ("I definately adress teh problem", "I definitely address the problem"),
+    # REMOVED: ("Your goverment recieve alot", ...) - "Your" is contextual
+    ("Wich occurence is truely bad", "Which occurrence is truly bad"),
+]
+
+
+# =============================
+# API poziv
+# =============================
+def request_api(text):
+    start = time.time()
+    try:
+        r = requests.post(API_URL, json={"text": text}, timeout=10)
+        ms = round((time.time() - start) * 1000, 2)
+
+        if r.status_code != 200:
+            return None, ms, f"HTTP {r.status_code}: {r.text}"
+
+        return r.json().get("corrected", ""), ms, None
+
+    except Exception as e:
+        return None, 0, str(e)
+
+
+# =============================
+# Pojedinačan test
+# =============================
+def run_single_test(name, wrong, expected):
+    actual, response_time, error = request_api(wrong)
+
+    if error:
+        return {
+            "test": name,
+            "input": wrong,
+            "expected": expected,
+            "actual": error,
+            "passed": False,
+            "response_time": response_time,
+        }
+
+    passed = normalize(actual) == normalize(expected)
+
+    return {
+        "test": name,
+        "input": wrong,
+        "expected": expected,
+        "actual": actual,
+        "passed": passed,
+        "response_time": response_time,
+    }
+
+
+# =============================
+# Upis rezultata
+# =============================
+def save_results(results):
+    passed = sum(1 for r in results if r["passed"])
+    total = len(results)
+    success_rate = round((passed / total) * 100, 2)
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(f"=== SPELLING TEST RESULTS - {datetime.now()} ===\n")
+        f.write(f"TOTAL: {total} | PASSED: {passed} | SUCCESS: {success_rate}%\n\n")
+        f.write("NOTE: Contextual homophones (their/your) are tested in test_contextual_spelling.py\n\n")
+
+        for r in results:
+            line = json.dumps(r, ensure_ascii=False)
+            f.write(line + "\n")
+
+    print(f"\n📄 Rezultati upisani u {OUTPUT_FILE}")
+    print(f"🎯 SUCCESS RATE: {success_rate}%\n")
+
+
+# =============================
+# MAIN
+# =============================
+def main():
+    results = []
+
+    print("\n=== RUNNING SPELLING TESTS ===\n")
+
+    # Direktna pravila spelling correctora
+    for wrong, expected in SPELLING_TESTS:
+        name = f"Rule: {wrong} → {expected}"
+        r = run_single_test(name, wrong, expected)
+        results.append(r)
+        print(("✓" if r["passed"] else "✗"), name)
+
+    # Testovi kapitalizacije
+    print("\n=== CAPITALIZATION TESTS ===")
+    for wrong, expected in CAPITALIZATION_TESTS:
+        name = f"Caps: {wrong}"
+        r = run_single_test(name, wrong, expected)
+        results.append(r)
+        print(("✓" if r["passed"] else "✗"), name)
+
+    # Testovi rečenica
+    print("\n=== SENTENCE TESTS ===")
+    for wrong, expected in SENTENCE_TESTS:
+        name = "Sentence"
+        r = run_single_test(name, wrong, expected)
+        results.append(r)
+        print(("✓" if r["passed"] else "✗"), wrong)
+
+    save_results(results)
+    print("✅ DONE\n")
+    print("💡 TIP: For contextual spelling (their/your), run: python test_contextual_spelling.py\n")
+
+
+if __name__ == "__main__":
+    main()
+
+
+============================================================
+FILE: tests/test_grammar.py
+============================================================
+
+import requests
+import json
+import time
+from datetime import datetime
+
+API_URL = "http://127.0.0.1:5000/correct/grammar"
+OUTPUT_FILE = "TEST_GRAMMAR_RESULTS.txt"
+
+
+def beep():
+    try:
+        print("\a", end="")  # mali bip u terminalu
+    except:
+        pass
+
+
+def request_api(text):
+    start = time.time()
+    try:
+        r = requests.post(API_URL, json={"text": text}, timeout=10)
+        ms = round((time.time() - start) * 1000, 2)
+
+        if r.status_code != 200:
+            return None, ms, f"HTTP {r.status_code}: {r.text}"
+
+        return r.json().get("corrected", ""), ms, None
+
+    except Exception as e:
+        return None, 0, str(e)
+
+
+def run_test(name, input_text, expected):
+    actual, rt, error = request_api(input_text)
+
+    if error:
+        return {
+            "test": name,
+            "input": input_text,
+            "expected": expected,
+            "actual": error,
+            "passed": False,
+            "response_time": rt
+        }
+
+    return {
+        "test": name,
+        "input": input_text,
+        "expected": expected,
+        "actual": actual,
+        "passed": actual.strip() == expected.strip(),
+        "response_time": rt
+    }
+
+
+def save_results(results):
+    passed = sum(1 for r in results if r["passed"])
+    total = len(results)
+    success_rate = round((passed / total) * 100, 2)
+
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(f"=== GRAMMAR TEST RESULTS - {datetime.now()} ===\n")
+        f.write(f"TOTAL: {total} | PASSED: {passed} | SUCCESS: {success_rate}%\n\n")
+
+        for r in results:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+        f.write("\n======== MVP STATUS ========\n")
+        if success_rate >= 60:
+            f.write("✅ ACCEPTABLE FOR MVP\n")
+        else:
+            f.write("❌ BELOW MVP QUALITY THRESHOLD\n")
+
+    print(f"\n📄 Rezultati upisani u {OUTPUT_FILE}")
+    print(f"🎯 GRAMMAR SCORE: {success_rate}%")
+
+    if success_rate >= 60:
+        print("✅ STATUS: ACCEPTABLE FOR MVP\n")
+    else:
+        print("❌ STATUS: BELOW MVP QUALITY\n")
+
+    beep()
+
+
+def main():
+    results = []
+
+    print("\n=== RUNNING GRAMMAR TESTS ===\n")
+
+    TESTS = [
+
+        # --- VERB AGREEMENT ---
+        ("Verb agreement he", "he go to school", "He goes to school"),
+        ("Verb agreement she", "she have a car", "She has a car"),
+        ("Verb agreement I", "i is happy", "I am happy"),
+
+        # --- IRREGULAR VERBS ---
+        ("Irregular past", "she didn't ate dinner", "She didn't eat dinner"),
+        ("Irregular correction", "he goed home", "He went home"),
+        ("Perfect tense", "he has ate", "He has eaten"),
+
+        # --- ARTICLES ---
+        ("Article vowel", "a umbrella is here", "An umbrella is here"),
+        ("Article consonant", "an book is missing", "A book is missing"),
+
+        # --- COMMON USER CHAT ---
+        ("User phrase 1", "i dont understand this system", "I don't understand this system"),
+        ("User phrase 2", "why she dont reply me", "Why doesn't she reply me"),
+        ("User phrase 3", "me and him was late", "He and I were late"),
+
+        # --- WORD ORDER ---
+        ("Word order", "always he is late", "He always is late"),
+
+        # --- PREPOSITIONS ---
+        ("Preposition error", "he arrived to airport", "He arrived at airport"),
+
+        # --- REALISTIC MIX ---
+        ("Complex sentence",
+         "he dont know where she was went yesterday",
+         "He doesn't know where she went yesterday"),
+    ]
+
+    for name, inp, exp in TESTS:
+        r = run_test(name, inp, exp)
+        results.append(r)
+        print(("✓" if r["passed"] else "✗"), name)
+
+    save_results(results)
+
+
+if __name__ == "__main__":
+    main()
+
+
