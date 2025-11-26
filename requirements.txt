@@ -3,3 +3,4 @@ textblob==0.17.1
 flask-limiter==3.3.0
 pyspellchecker==0.7.2
 nltk==3.8.1
+gunicorn==22.0.0
