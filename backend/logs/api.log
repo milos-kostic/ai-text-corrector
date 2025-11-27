@@ -9086,3 +9086,11 @@ Starting AI Text Corrector API server
 127.0.0.1 - - [26/Nov/2025 17:30:14] "POST /correct HTTP/1.1" 200 -
 127.0.0.1 - - [26/Nov/2025 17:30:14] "POST /correct HTTP/1.1" 200 -
 127.0.0.1 - - [26/Nov/2025 17:30:14] "POST /correct HTTP/1.1" 200 -
+Logging initialized successfully
+All correctors loaded successfully
+Logging initialized successfully
+All correctors loaded successfully
+Serving on http://0.0.0.0:5000
+Logging initialized successfully
+All correctors loaded successfully
+Serving on http://0.0.0.0:5000
