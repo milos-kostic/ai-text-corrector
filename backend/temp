@@ -1,0 +1,224 @@
+# run_all_tests - origin
+import subprocess
+import sys
+import os
+from datetime import datetime
+
+
+def run_all_tests():
+    """Run all test files sequentially"""
+    print("RUNNING ALL TESTS")
+    print("=" * 50)
+    print(f"Start Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print()
+
+    # Proveri različite moguće lokacije test fajlova
+    possible_paths = [
+        '.',  # root
+        'tests',  # tests folder
+        './tests'  # tests folder
+    ]
+
+    test_files = ['test_basic.py', 'test_spelling.py', 'test_grammar.py']
+    found_files = []
+
+    # Pronađi gde se nalaze test fajlovi
+    for test_file in test_files:
+        found = False
+        for path in possible_paths:
+            full_path = os.path.join(path, test_file)
+            if os.path.exists(full_path):
+                found_files.append(full_path)
+                print(f"FOUND: {test_file} at: {full_path}")
+                found = True
+                break
+
+        if not found:
+            print(f"NOT FOUND: {test_file}")
+
+    if not found_files:
+        print("No test files found!")
+        return
+
+    total_files = len(found_files)
+    successful_files = 0
+
+    for i, test_file in enumerate(found_files, 1):
+        print(f"[{i}/{total_files}] Running {test_file}...")
+        print("-" * 40)
+
+        try:
+            # Postavi UTF-8 encoding za stdout i stderr
+            env = os.environ.copy()
+            env['PYTHONIOENCODING'] = 'utf-8'
+
+            result = subprocess.run(
+                [sys.executable, test_file],
+                capture_output=True,
+                text=True,
+                encoding='utf-8',
+                env=env,
+                timeout=600
+            )
+
+            if result.returncode == 0:
+                print(f"SUCCESS: {test_file} completed")
+                successful_files += 1
+            else:
+                print(f"FAILED: {test_file} return code {result.returncode}")
+                if result.stderr:
+                    # Prikaz samo prvih nekoliko linija errora
+                    error_lines = result.stderr.strip().split('\n')
+                    print("Error details:")
+                    for line in error_lines[:3]:
+                        print(f"  {line}")
+
+            # PRIKAZ CELOG OUTPUTA za test_grammar.py, a za ostale samo bitne delove
+            if result.stdout:
+                output_lines = result.stdout.strip().split('\n')
+
+                if "grammar" in test_file.lower():
+                    # Za grammar test prikaži SVE
+                    print("Full output:")
+                    for line in output_lines:
+                        print(f"  {line}")
+                else:
+                    # Za ostale testove prikaži samo bitne linije
+                    important_lines = []
+                    for line in output_lines:
+                        line_lower = line.lower()
+                        if any(keyword in line_lower for keyword in
+                               ['running', 'results', 'success', 'passed', 'failed', 'rate', 'total',
+                                'score', 'grammar', 'spelling', 'basic', 'status', 'mvp']):
+                            important_lines.append(line)
+
+                    if important_lines:
+                        print("Output summary:")
+                        for line in important_lines:
+                            print(f"  {line}")
+
+        except subprocess.TimeoutExpired:
+            print(f"TIMEOUT: {test_file}")
+        except Exception as e:
+            print(f"ERROR: {test_file} - {str(e)}")
+
+        print()
+
+    print("=" * 50)
+    print("ALL TESTS COMPLETED")
+    print(f"End Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Successful: {successful_files}/{total_files} files")
+
+    # Proveri rezultate fajlova i prikaži konačne rezultate
+    print("\nFINAL RESULTS SUMMARY:")
+    print("=" * 30)
+
+    result_files = ['TEST_BASIC_RESULTS.txt', 'TEST_SPELLING_RESULTS.txt', 'TEST_GRAMMAR_RESULTS.txt']
+    for result_file in result_files:
+        for path in possible_paths:
+            full_path = os.path.join(path, result_file)
+            if os.path.exists(full_path):
+                try:
+                    with open(full_path, 'r', encoding='utf-8') as f:
+                        first_lines = []
+                        for i, line in enumerate(f):
+                            if i < 3:  # Uzmi prve 3 linije
+                                first_lines.append(line.strip())
+                            else:
+                                break
+
+                        # Pronađi liniju sa rezultatom
+                        for line in first_lines:
+                            if 'TOTAL:' in line and 'PASSED:' in line and 'SUCCESS:' in line:
+                                print(f"📊 {result_file}: {line}")
+                                break
+                        else:
+                            print(f"📄 {result_file}: EXISTS (no summary line found)")
+                except Exception as e:
+                    print(f"❌ {result_file}: ERROR reading - {e}")
+                break
+        else:
+            print(f"❌ {result_file}: NOT FOUND")
+
+
+def collect_files():
+    """Funkcija iz _collect.py za prikupljanje svih fajlova"""
+    OUTPUT_FILE = "_ALL_CODE_COLLECTED.txt"
+
+    # Lista fajlova koje ćemo skupiti
+    FILES_TO_COLLECT = [
+        "app.py",
+        "correctors/base_corrector.py",
+        "correctors/spelling_corrector.py",
+        "correctors/grammar_corrector.py",
+        "correctors/contextual_corrector.py",
+        "simple_error_handler.py",
+        "auth.py",
+        "tests/test_basic.py",
+        "tests/test_spelling.py",
+        "tests/test_grammar.py",
+        "tests/test_contextual_spelling.py",
+        "tests/test_i_capitalization.py",
+        "tests/test_grammar_heuristics.py",
+        "tests/production_benchmark.py",
+        "tests/test_word_order_fix.py",
+        "TEST_BASIC_RESULTS.txt",
+        "TEST_SPELLING_RESULTS.txt",
+        "TEST_GRAMMAR_RESULTS.txt",
+        "TEST_CONTEXTUAL_RESULTS.txt",
+        "GRAMMAR_HEURISTICS_TEST.json",
+        "I_CAPITALIZATION_TEST.json",
+    ]
+
+    root = os.getcwd()
+    output_path = os.path.join(root, OUTPUT_FILE)
+
+    print(f"\n📦 COLLECTING ALL FILES INTO: {OUTPUT_FILE}")
+    print("-" * 50)
+
+    # 🔥 OVA LINIJA UVEK BRIŠE STARI FAJL I KREIRA NOVI
+    # Otvaranje sa "w" MODOM znači: truncate / isprazni fajl ako postoji.
+    with open(output_path, "w", encoding="utf-8") as out:
+
+        for file_path in FILES_TO_COLLECT:
+            abs_path = os.path.join(root, file_path)
+
+            out.write("\n\n" + "-" * 70 + "\n")
+            out.write(f"FILE: {file_path}\n")
+            out.write("-" * 70 + "\n\n")
+
+            if not os.path.exists(abs_path):
+                out.write(f"[FILE NOT FOUND] {file_path}\n")
+                print(f"❌ [NOT FOUND] {file_path}")
+                continue
+
+            try:
+                with open(abs_path, "r", encoding="utf-8", errors="ignore") as f:
+                    out.write(f.read())
+                print(f"✅ [COLLECTED] {file_path}")
+            except Exception as e:
+                out.write(f"[ERROR READING FILE] {e}\n")
+                print(f"❌ [ERROR] {file_path}: {e}")
+
+    print(f"\n🎉 Successfully created: {OUTPUT_FILE}")
+
+
+def main():
+    """Glavna funkcija koja pokreće sve testove i onda prikuplja fajlove"""
+    # Prvo pokreni sve testove
+    run_all_tests()
+
+    # Onda prikupi sve fajlove
+    print("\n" + "=" * 70)
+    print("STARTING FILE COLLECTION")
+    print("=" * 70)
+
+    collect_files()
+
+    print("\n" + "=" * 70)
+    print("COMPLETE! All tests run and files collected.")
+    print("=" * 70)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,26 @@
+=== SPELLING TEST RESULTS - 2025-11-26 17:30:13.339450 ===
+TOTAL: 21 | PASSED: 21 | SUCCESS: 100.0%
+
+NOTE: Contextual homophones (their/your) are tested in test_contextual_spelling.py
+
+{"test": "Rule: teh → the", "input": "teh", "expected": "the", "actual": "The", "passed": true, "response_time": 11.72}
+{"test": "Rule: adress → address", "input": "adress", "expected": "address", "actual": "Address", "passed": true, "response_time": 7.71}
+{"test": "Rule: recieve → receive", "input": "recieve", "expected": "receive", "actual": "Receive", "passed": true, "response_time": 11.23}
+{"test": "Rule: occurence → occurrence", "input": "occurence", "expected": "occurrence", "actual": "Occurrence", "passed": true, "response_time": 3.77}
+{"test": "Rule: accomodate → accommodate", "input": "accomodate", "expected": "accommodate", "actual": "Accommodate", "passed": true, "response_time": 0.0}
+{"test": "Rule: definately → definitely", "input": "definately", "expected": "definitely", "actual": "Definitely", "passed": true, "response_time": 15.77}
+{"test": "Rule: seperate → separate", "input": "seperate", "expected": "separate", "actual": "Separate", "passed": true, "response_time": 15.63}
+{"test": "Rule: wich → which", "input": "wich", "expected": "which", "actual": "Which", "passed": true, "response_time": 0.0}
+{"test": "Rule: becuase → because", "input": "becuase", "expected": "because", "actual": "Because", "passed": true, "response_time": 16.75}
+{"test": "Rule: alot → a lot", "input": "alot", "expected": "a lot", "actual": "A lot", "passed": true, "response_time": 15.96}
+{"test": "Rule: truely → truly", "input": "truely", "expected": "truly", "actual": "Truly", "passed": true, "response_time": 0.0}
+{"test": "Rule: goverment → government", "input": "goverment", "expected": "government", "actual": "Government", "passed": true, "response_time": 15.63}
+{"test": "Rule: enviroment → environment", "input": "enviroment", "expected": "environment", "actual": "Environment", "passed": true, "response_time": 20.02}
+{"test": "Rule: untill → until", "input": "untill", "expected": "until", "actual": "Until", "passed": true, "response_time": 9.25}
+{"test": "Rule: wiches → which", "input": "wiches", "expected": "which", "actual": "Which", "passed": true, "response_time": 0.0}
+{"test": "Caps: Teh", "input": "Teh", "expected": "The", "actual": "The", "passed": true, "response_time": 15.65}
+{"test": "Caps: TEH", "input": "TEH", "expected": "THE", "actual": "The", "passed": true, "response_time": 0.0}
+{"test": "Caps: Recieve", "input": "Recieve", "expected": "Receive", "actual": "Receive", "passed": true, "response_time": 15.63}
+{"test": "Caps: GOVERMENT", "input": "GOVERMENT", "expected": "GOVERNMENT", "actual": "Government", "passed": true, "response_time": 15.87}
+{"test": "Sentence", "input": "I definately adress teh problem", "expected": "I definitely address the problem", "actual": "I definitely address the problem", "passed": true, "response_time": 15.86}
+{"test": "Sentence", "input": "Wich occurence is truely bad", "expected": "Which occurrence is truly bad", "actual": "Which occurrence is truly bad", "passed": true, "response_time": 0.0}

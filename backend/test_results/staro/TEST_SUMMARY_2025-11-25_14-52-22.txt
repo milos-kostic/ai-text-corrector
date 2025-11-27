@@ -1,0 +1,39 @@
+================================================================================
+COMPREHENSIVE TEST SUMMARY
+Generated: 2025-11-25 14:52:24.699096
+================================================================================
+
+OVERALL STATISTICS:
+  Total Tests Run: 4
+  Passed: 0
+  Failed: 4
+  Success Rate: 0.0%
+  Total Execution Time: 2.21s
+  Average Time per Test: 0.55s
+
+INDIVIDUAL TEST RESULTS:
+------------------------------------------------------------
+  tests/test_basic.py            [FAIL] Unknown          0.56s
+  tests/test_spelling.py         [FAIL] Unknown           0.6s
+  tests/test_grammar.py          [FAIL] Unknown          0.52s
+  tests/test_edge_cases.py       [FAIL] Unknown          0.53s
+
+FILES GENERATED:
+------------------------------------------------------------
+  1_CODE                    test_results/1_CODE_2025-11-25_14-52-22.txt (54137 bytes)
+  2_MAIN_TESTS              test_results/2_MAIN_TESTS_2025-11-25_14-52-22.txt (14450 bytes)
+  3_MAIN_TESTS_RESULTS      test_results/3_MAIN_TESTS_RESULTS_2025-11-25_14-52-22.txt (3009 bytes)
+  4_SPECIFIC_TESTS          test_results/4_SPECIFIC_TESTS_2025-11-25_14-52-22.txt (11106 bytes)
+  5_SPECIFIC_TESTS_RESULTS  test_results/5_SPECIFIC_TESTS_RESULTS_2025-11-25_14-52-22.txt (1179 bytes)
+  SUMMARY                   test_results/TEST_SUMMARY_2025-11-25_14-52-22.txt (0 bytes)
+
+CODE STATISTICS:
+------------------------------------------------------------
+  Source Files: 7
+  Test Files: 4
+  Total Lines: 2181
+
+RECOMMENDATIONS:
+------------------------------------------------------------
+  ⚠️  4 test(s) failed. Review specific test results.
+  ✅ Test execution time is acceptable.

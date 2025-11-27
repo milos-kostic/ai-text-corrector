@@ -1,0 +1,225 @@
+import requests
+import json
+from datetime import datetime
+
+API_URL = "http://127.0.0.1:5000/correct"
+OUTPUT_FILE = "TEST_EDGE_CASES_RESULTS.txt"
+
+
+def test_correction(text):
+    """Test single correction and return result"""
+    try:
+        r = requests.post(API_URL, json={"text": text}, timeout=10)
+        if r.status_code == 200:
+            return r.json().get("corrected", "")
+        return f"ERROR: {r.status_code}"
+    except Exception as e:
+        return f"ERROR: {str(e)}"
+
+
+def main():
+    print("\n=== TESTING EDGE CASES ===\n")
+
+    # Test cases: (input, expected_correct, description)
+    tests = [
+        # ============================================
+        # ELLIPSIS CAPITALIZATION TESTS (THE CRITICAL ONES)
+        # ============================================
+        ("hello... world", "Hello... world", "Ellipsis WITH space - should NOT capitalize 'world'"),
+        ("first... second", "First... second", "Ellipsis with space - should NOT capitalize 'second'"),
+        ("test... test... test", "Test... test... test", "Multiple ellipsis - only first word capitalized"),
+        ("start... middle. end", "Start... middle. End", "Mixed ellipsis and normal period - capitalize after period only"),
+
+        # ============================================
+        # NORMAL SENTENCE BOUNDARIES (SHOULD STILL WORK)
+        # ============================================
+        ("first sentence. second sentence", "First sentence. Second sentence", "Normal sentence boundaries - SHOULD capitalize"),
+        ("end. start", "End. Start", "Single dot with space - SHOULD capitalize"),
+        ("what? really", "What? Really", "Single question with space - SHOULD capitalize"),
+        ("stop! now", "Stop! Now", "Single exclamation with space - SHOULD capitalize"),
+
+        # ============================================
+        # COMPACT PUNCTUATION (NO SPACE)
+        # ============================================
+        ("word...word", "Word...word", "3 dots without space - preserve ellipsis"),
+        ("word....word", "Word...word", "4 dots without space - collapse to 3"),
+        ("hello!!world", "Hello!world", "2 exclamation without space - collapse to 1"),
+        ("what??really", "What?really", "2 question without space - collapse to 1"),
+        ("hello.world", "Hello.world", "Single dot without space - should NOT capitalize"),
+
+        # ============================================
+        # EMOJI WITH PUNCTUATION
+        # ============================================
+        ("hello!😃world", "Hello!😃world", "Emoji after exclamation - should NOT capitalize"),
+        ("what?😂really", "What?😂really", "Emoji after question - should NOT capitalize"),
+        ("hello.😊world", "Hello.😊world", "Emoji after period - should NOT capitalize"),
+
+        # ============================================
+        # MIXED SMART QUOTES AND REGULAR
+        # ============================================
+        ("It's 'fine'", "It's 'fine'", "Mixed apostrophe and single quotes"),
+        ('He said "hello"', 'He said "hello"', "Regular double quotes"),
+        ('They said "it\'s ok"', 'They said "it\'s ok"', "Nested quotes with apostrophe - should NOT capitalize 'it'"),
+
+        # ============================================
+        # COMPLEX SCENARIOS
+        # ============================================
+        ("warning!! danger... be careful", "Warning! danger... be careful", "Mixed punctuation types - capitalize only first word"),
+        ("first... second. third... fourth", "First... second. Third... fourth", "Complex mixed punctuation"),
+
+        # ============================================
+        # EDGE CASES WITH PRESERVED CONTENT
+        # ============================================
+        ("visit https://example.com... now", "Visit https://example.com... now", "URL with ellipsis - should NOT capitalize 'now'"),
+        ("email test@test.com... later", "Email test@test.com... later", "Email with ellipsis - should NOT capitalize 'later'"),
+        ("follow #tag... today", "Follow #tag... today", "Hashtag with ellipsis - should NOT capitalize 'today'"),
+
+        # ============================================
+        # ZERO-WIDTH CHARACTERS AND WHITESPACE
+        # ============================================
+        ("he\u200bllo wor\u200bld", "Hello world", "Zero-width characters should be removed"),
+        ("hello   world", "Hello world", "Multiple spaces should collapse"),
+        ("hello\t\tworld", "Hello world", "Tabs should convert to spaces"),
+
+        # ============================================
+        # CAPITALIZATION EDGE CASES
+        # ============================================
+        ("i am here", "I am here", "Standalone 'i' should capitalize"),
+        ("THIS IS ALL CAPS", "This is all caps", "All caps should normalize"),
+        ("hElLo WoRLD", "Hello world", "Random casing should fix"),
+        ("hello.there", "Hello.there", "Dot without space - no capitalization"),
+
+        # ============================================
+        # PUNCTUATION COLLAPSING
+        # ============================================
+        ("hello!!!! world", "Hello! world", "Multiple exclamation should collapse"),
+        ("what???? really", "What? really", "Multiple question should collapse"),
+        ("wait..... go", "Wait... go", "Multiple dots (5+) should collapse to 3"),
+
+        # ============================================
+        # REAL-WORLD SCENARIOS
+        # ============================================
+        ("omg... this is amazing!! really?", "Omg... this is amazing! Really?", "Mixed real-world example"),
+        ("he said: 'wait... no, stop!'", "He said: 'wait... no, stop!'", "Quotes with ellipsis"),
+        ("download from https://site.com... now!", "Download from https://site.com... now!", "URL with ellipsis and exclamation"),
+    ]
+
+    results = []
+    passed = 0
+    failed = 0
+
+    print("Running edge case tests...\n")
+
+    for input_text, expected, description in tests:
+        actual = test_correction(input_text)
+        is_correct = actual.strip() == expected.strip()
+
+        if is_correct:
+            passed += 1
+            status = "✅ PASS"
+        else:
+            failed += 1
+            status = "❌ FAIL"
+
+        result = {
+            "status": status,
+            "description": description,
+            "input": input_text,
+            "expected": expected,
+            "actual": actual,
+            "correct": is_correct
+        }
+
+        results.append(result)
+
+        # Show all results, but highlight failures
+        if not is_correct:
+            print(f"{status} | {description}")
+            print(f"         Input:    '{input_text}'")
+            print(f"         Expected: '{expected}'")
+            print(f"         Actual:   '{actual}'")
+            print()
+        else:
+            print(f"{status} | {description}")
+
+    # Summary and analysis
+    print("\n" + "="*50)
+    print("📊 TEST SUMMARY")
+    print("="*50)
+
+    success_rate = round(passed / len(tests) * 100, 2)
+    print(f"TOTAL: {len(tests)} | PASSED: {passed} | FAILED: {failed}")
+    print(f"SUCCESS RATE: {success_rate}%")
+
+    # Category analysis
+    ellipsis_tests = [r for r in results if "ellipsis" in r["description"].lower()]
+    ellipsis_passed = sum(1 for r in ellipsis_tests if r["correct"])
+
+    punctuation_tests = [r for r in results if any(word in r["description"].lower() for word in ["punctuation", "dot", "exclamation", "question"])]
+    punctuation_passed = sum(1 for r in punctuation_tests if r["correct"])
+
+    capitalization_tests = [r for r in results if "capital" in r["description"].lower()]
+    capitalization_passed = sum(1 for r in capitalization_tests if r["correct"])
+
+    print(f"\n📈 CATEGORY ANALYSIS:")
+    print(f"   Ellipsis:       {ellipsis_passed}/{len(ellipsis_tests)} passed")
+    print(f"   Punctuation:    {punctuation_passed}/{len(punctuation_tests)} passed")
+    print(f"   Capitalization: {capitalization_passed}/{len(capitalization_tests)} passed")
+
+    # Critical failures
+    critical_failures = [r for r in results if not r["correct"] and any(word in r["description"].lower() for word in ["ellipsis", "critical", "should not capitalize"])]
+
+    if critical_failures:
+        print(f"\n🔴 CRITICAL FAILURES ({len(critical_failures)}):")
+        for fail in critical_failures[:5]:  # Show first 5
+            print(f"   - {fail['description']}")
+
+    # Success assessment
+    if success_rate >= 90:
+        print("\n🎉 EXCELLENT! Edge cases handled perfectly!")
+    elif success_rate >= 80:
+        print("\n✅ VERY GOOD! Minor edge cases need attention")
+    elif success_rate >= 70:
+        print("\n⚠️  ACCEPTABLE! Some edge cases need work")
+    else:
+        print("\n🔴 NEEDS IMPROVEMENT! Significant edge case issues")
+
+    # Save detailed results
+    try:
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+            f.write(f"=== EDGE CASES TEST RESULTS - {datetime.now()} ===\n")
+            f.write(f"TOTAL: {len(tests)} | PASSED: {passed} | FAILED: {failed} | SUCCESS: {success_rate}%\n\n")
+
+            f.write("CATEGORY BREAKDOWN:\n")
+            f.write(f"  Ellipsis tests: {ellipsis_passed}/{len(ellipsis_tests)} passed\n")
+            f.write(f"  Punctuation tests: {punctuation_passed}/{len(punctuation_tests)} passed\n")
+            f.write(f"  Capitalization tests: {capitalization_passed}/{len(capitalization_tests)} passed\n\n")
+
+            f.write("DETAILED RESULTS:\n")
+            f.write("="*80 + "\n")
+
+            for r in results:
+                f.write(f"\n{r['status']} | {r['description']}\n")
+                f.write(f"Input:    '{r['input']}'\n")
+                f.write(f"Expected: '{r['expected']}'\n")
+                f.write(f"Actual:   '{r['actual']}'\n")
+                f.write(f"Correct:  {r['correct']}\n")
+                f.write("-" * 40 + "\n")
+
+        print(f"\n📄 Full results saved to: {OUTPUT_FILE}")
+
+    except Exception as e:
+        print(f"\n❌ ERROR saving results: {e}")
+
+    # Final recommendation
+    print(f"\n💡 RECOMMENDATION: ", end="")
+    if success_rate >= 85:
+        print("Edge case handling is solid. Focus on maintaining this level.")
+    elif success_rate >= 70:
+        print("Address the critical failures first, then minor edge cases.")
+    else:
+        print("Priority should be fixing ellipsis and basic punctuation handling.")
+
+
+if __name__ == "__main__":
+    main()

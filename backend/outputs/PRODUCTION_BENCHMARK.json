@@ -1,0 +1,29 @@
+{
+  "timestamp": "2025-11-25T01:22:58.393781",
+  "tests": {
+    "response_time": {
+      "avg_ms": 14.04,
+      "p95_ms": 29.58,
+      "min_ms": 0.0,
+      "max_ms": 29.58,
+      "failures": 0,
+      "passed": true
+    },
+    "concurrency": {
+      "total_time_ms": 95.22,
+      "avg_request_ms": 52.46,
+      "failures": 0,
+      "passed": true
+    },
+    "batch": {
+      "batch_size": 50,
+      "total_time_ms": 28.63,
+      "time_per_text_ms": 0.57,
+      "passed": true
+    },
+    "error_handling": {
+      "passed": true
+    }
+  },
+  "verdict": "PASS"
+}

@@ -1,0 +1,269 @@
+=== EDGE CASES TEST RESULTS - 2025-11-26 17:30:15.000620 ===
+TOTAL: 37 | PASSED: 30 | FAILED: 7 | SUCCESS: 81.08%
+
+CATEGORY BREAKDOWN:
+  Ellipsis tests: 9/10 passed
+  Punctuation tests: 12/17 passed
+  Capitalization tests: 16/19 passed
+
+DETAILED RESULTS:
+================================================================================
+
+✅ PASS | Ellipsis WITH space - should NOT capitalize 'world'
+Input:    'hello... world'
+Expected: 'Hello... world'
+Actual:   'Hello... world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Ellipsis with space - should NOT capitalize 'second'
+Input:    'first... second'
+Expected: 'First... second'
+Actual:   'First... second'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Multiple ellipsis - only first word capitalized
+Input:    'test... test... test'
+Expected: 'Test... test... test'
+Actual:   'Test... test... test'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Mixed ellipsis and normal period - capitalize after period only
+Input:    'start... middle. end'
+Expected: 'Start... middle. End'
+Actual:   'Start... middle. End'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Normal sentence boundaries - SHOULD capitalize
+Input:    'first sentence. second sentence'
+Expected: 'First sentence. Second sentence'
+Actual:   'First sentence. Second sentence'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single dot with space - SHOULD capitalize
+Input:    'end. start'
+Expected: 'End. Start'
+Actual:   'End. Start'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single question with space - SHOULD capitalize
+Input:    'what? really'
+Expected: 'What? Really'
+Actual:   'What? Really'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single exclamation with space - SHOULD capitalize
+Input:    'stop! now'
+Expected: 'Stop! Now'
+Actual:   'Stop! Now'
+Correct:  True
+----------------------------------------
+
+✅ PASS | 3 dots without space - preserve ellipsis
+Input:    'word...word'
+Expected: 'Word...word'
+Actual:   'Word...word'
+Correct:  True
+----------------------------------------
+
+✅ PASS | 4 dots without space - collapse to 3
+Input:    'word....word'
+Expected: 'Word...word'
+Actual:   'Word...word'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | 2 exclamation without space - collapse to 1
+Input:    'hello!!world'
+Expected: 'Hello!world'
+Actual:   'Hello! World'
+Correct:  False
+----------------------------------------
+
+✅ PASS | 2 question without space - collapse to 1
+Input:    'what??really'
+Expected: 'What?really'
+Actual:   'What?really'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single dot without space - should NOT capitalize
+Input:    'hello.world'
+Expected: 'Hello.world'
+Actual:   'Hello.world'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Emoji after exclamation - should NOT capitalize
+Input:    'hello!😃world'
+Expected: 'Hello!😃world'
+Actual:   'Hello! 😃world'
+Correct:  False
+----------------------------------------
+
+✅ PASS | Emoji after question - should NOT capitalize
+Input:    'what?😂really'
+Expected: 'What?😂really'
+Actual:   'What?😂really'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Emoji after period - should NOT capitalize
+Input:    'hello.😊world'
+Expected: 'Hello.😊world'
+Actual:   'Hello.😊world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Mixed apostrophe and single quotes
+Input:    'It's 'fine''
+Expected: 'It's 'fine''
+Actual:   'It's 'fine''
+Correct:  True
+----------------------------------------
+
+✅ PASS | Regular double quotes
+Input:    'He said "hello"'
+Expected: 'He said "hello"'
+Actual:   'He said "hello"'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Nested quotes with apostrophe - should NOT capitalize 'it'
+Input:    'They said "it's ok"'
+Expected: 'They said "it's ok"'
+Actual:   'They said "It's ok"'
+Correct:  False
+----------------------------------------
+
+❌ FAIL | Mixed punctuation types - capitalize only first word
+Input:    'warning!! danger... be careful'
+Expected: 'Warning! danger... be careful'
+Actual:   'Warning! Danger... be careful'
+Correct:  False
+----------------------------------------
+
+✅ PASS | Complex mixed punctuation
+Input:    'first... second. third... fourth'
+Expected: 'First... second. Third... fourth'
+Actual:   'First... second. Third... fourth'
+Correct:  True
+----------------------------------------
+
+✅ PASS | URL with ellipsis - should NOT capitalize 'now'
+Input:    'visit https://example.com... now'
+Expected: 'Visit https://example.com... now'
+Actual:   'Visit https://example.com... now'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Email with ellipsis - should NOT capitalize 'later'
+Input:    'email test@test.com... later'
+Expected: 'Email test@test.com... later'
+Actual:   'Email test@test.com... later'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Hashtag with ellipsis - should NOT capitalize 'today'
+Input:    'follow #tag... today'
+Expected: 'Follow #tag... today'
+Actual:   'Follow #tag... today'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Zero-width characters should be removed
+Input:    'he​llo wor​ld'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Multiple spaces should collapse
+Input:    'hello   world'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Tabs should convert to spaces
+Input:    'hello		world'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Standalone 'i' should capitalize
+Input:    'i am here'
+Expected: 'I am here'
+Actual:   'I am here'
+Correct:  True
+----------------------------------------
+
+✅ PASS | All caps should normalize
+Input:    'THIS IS ALL CAPS'
+Expected: 'This is all caps'
+Actual:   'This is all caps'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Random casing should fix
+Input:    'hElLo WoRLD'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Dot without space - no capitalization
+Input:    'hello.there'
+Expected: 'Hello.there'
+Actual:   'Hello.there'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Multiple exclamation should collapse
+Input:    'hello!!!! world'
+Expected: 'Hello! world'
+Actual:   'Hello! World'
+Correct:  False
+----------------------------------------
+
+❌ FAIL | Multiple question should collapse
+Input:    'what???? really'
+Expected: 'What? really'
+Actual:   'What? Really'
+Correct:  False
+----------------------------------------
+
+✅ PASS | Multiple dots (5+) should collapse to 3
+Input:    'wait..... go'
+Expected: 'Wait... go'
+Actual:   'Wait... go'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Mixed real-world example
+Input:    'omg... this is amazing!! really?'
+Expected: 'Omg... this is amazing! Really?'
+Actual:   'Omg... this is amazing! Really?'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Quotes with ellipsis
+Input:    'he said: 'wait... no, stop!''
+Expected: 'He said: 'wait... no, stop!''
+Actual:   'He said: 'wait... no, stop! ''
+Correct:  False
+----------------------------------------
+
+✅ PASS | URL with ellipsis and exclamation
+Input:    'download from https://site.com... now!'
+Expected: 'Download from https://site.com... now!'
+Actual:   'Download from https://site.com... now!'
+Correct:  True
+----------------------------------------

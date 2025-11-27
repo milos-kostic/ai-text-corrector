@@ -1,0 +1,1206 @@
+
+
+======================================================================
+FILE: TEST_EDGE_CASES_RESULTS.txt
+======================================================================
+
+=== EDGE CASES TEST RESULTS - 2025-11-26 17:30:15.000620 ===
+TOTAL: 37 | PASSED: 30 | FAILED: 7 | SUCCESS: 81.08%
+
+CATEGORY BREAKDOWN:
+  Ellipsis tests: 9/10 passed
+  Punctuation tests: 12/17 passed
+  Capitalization tests: 16/19 passed
+
+DETAILED RESULTS:
+================================================================================
+
+✅ PASS | Ellipsis WITH space - should NOT capitalize 'world'
+Input:    'hello... world'
+Expected: 'Hello... world'
+Actual:   'Hello... world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Ellipsis with space - should NOT capitalize 'second'
+Input:    'first... second'
+Expected: 'First... second'
+Actual:   'First... second'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Multiple ellipsis - only first word capitalized
+Input:    'test... test... test'
+Expected: 'Test... test... test'
+Actual:   'Test... test... test'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Mixed ellipsis and normal period - capitalize after period only
+Input:    'start... middle. end'
+Expected: 'Start... middle. End'
+Actual:   'Start... middle. End'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Normal sentence boundaries - SHOULD capitalize
+Input:    'first sentence. second sentence'
+Expected: 'First sentence. Second sentence'
+Actual:   'First sentence. Second sentence'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single dot with space - SHOULD capitalize
+Input:    'end. start'
+Expected: 'End. Start'
+Actual:   'End. Start'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single question with space - SHOULD capitalize
+Input:    'what? really'
+Expected: 'What? Really'
+Actual:   'What? Really'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single exclamation with space - SHOULD capitalize
+Input:    'stop! now'
+Expected: 'Stop! Now'
+Actual:   'Stop! Now'
+Correct:  True
+----------------------------------------
+
+✅ PASS | 3 dots without space - preserve ellipsis
+Input:    'word...word'
+Expected: 'Word...word'
+Actual:   'Word...word'
+Correct:  True
+----------------------------------------
+
+✅ PASS | 4 dots without space - collapse to 3
+Input:    'word....word'
+Expected: 'Word...word'
+Actual:   'Word...word'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | 2 exclamation without space - collapse to 1
+Input:    'hello!!world'
+Expected: 'Hello!world'
+Actual:   'Hello! World'
+Correct:  False
+----------------------------------------
+
+✅ PASS | 2 question without space - collapse to 1
+Input:    'what??really'
+Expected: 'What?really'
+Actual:   'What?really'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Single dot without space - should NOT capitalize
+Input:    'hello.world'
+Expected: 'Hello.world'
+Actual:   'Hello.world'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Emoji after exclamation - should NOT capitalize
+Input:    'hello!😃world'
+Expected: 'Hello!😃world'
+Actual:   'Hello! 😃world'
+Correct:  False
+----------------------------------------
+
+✅ PASS | Emoji after question - should NOT capitalize
+Input:    'what?😂really'
+Expected: 'What?😂really'
+Actual:   'What?😂really'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Emoji after period - should NOT capitalize
+Input:    'hello.😊world'
+Expected: 'Hello.😊world'
+Actual:   'Hello.😊world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Mixed apostrophe and single quotes
+Input:    'It's 'fine''
+Expected: 'It's 'fine''
+Actual:   'It's 'fine''
+Correct:  True
+----------------------------------------
+
+✅ PASS | Regular double quotes
+Input:    'He said "hello"'
+Expected: 'He said "hello"'
+Actual:   'He said "hello"'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Nested quotes with apostrophe - should NOT capitalize 'it'
+Input:    'They said "it's ok"'
+Expected: 'They said "it's ok"'
+Actual:   'They said "It's ok"'
+Correct:  False
+----------------------------------------
+
+❌ FAIL | Mixed punctuation types - capitalize only first word
+Input:    'warning!! danger... be careful'
+Expected: 'Warning! danger... be careful'
+Actual:   'Warning! Danger... be careful'
+Correct:  False
+----------------------------------------
+
+✅ PASS | Complex mixed punctuation
+Input:    'first... second. third... fourth'
+Expected: 'First... second. Third... fourth'
+Actual:   'First... second. Third... fourth'
+Correct:  True
+----------------------------------------
+
+✅ PASS | URL with ellipsis - should NOT capitalize 'now'
+Input:    'visit https://example.com... now'
+Expected: 'Visit https://example.com... now'
+Actual:   'Visit https://example.com... now'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Email with ellipsis - should NOT capitalize 'later'
+Input:    'email test@test.com... later'
+Expected: 'Email test@test.com... later'
+Actual:   'Email test@test.com... later'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Hashtag with ellipsis - should NOT capitalize 'today'
+Input:    'follow #tag... today'
+Expected: 'Follow #tag... today'
+Actual:   'Follow #tag... today'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Zero-width characters should be removed
+Input:    'he​llo wor​ld'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Multiple spaces should collapse
+Input:    'hello   world'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Tabs should convert to spaces
+Input:    'hello		world'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Standalone 'i' should capitalize
+Input:    'i am here'
+Expected: 'I am here'
+Actual:   'I am here'
+Correct:  True
+----------------------------------------
+
+✅ PASS | All caps should normalize
+Input:    'THIS IS ALL CAPS'
+Expected: 'This is all caps'
+Actual:   'This is all caps'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Random casing should fix
+Input:    'hElLo WoRLD'
+Expected: 'Hello world'
+Actual:   'Hello world'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Dot without space - no capitalization
+Input:    'hello.there'
+Expected: 'Hello.there'
+Actual:   'Hello.there'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Multiple exclamation should collapse
+Input:    'hello!!!! world'
+Expected: 'Hello! world'
+Actual:   'Hello! World'
+Correct:  False
+----------------------------------------
+
+❌ FAIL | Multiple question should collapse
+Input:    'what???? really'
+Expected: 'What? really'
+Actual:   'What? Really'
+Correct:  False
+----------------------------------------
+
+✅ PASS | Multiple dots (5+) should collapse to 3
+Input:    'wait..... go'
+Expected: 'Wait... go'
+Actual:   'Wait... go'
+Correct:  True
+----------------------------------------
+
+✅ PASS | Mixed real-world example
+Input:    'omg... this is amazing!! really?'
+Expected: 'Omg... this is amazing! Really?'
+Actual:   'Omg... this is amazing! Really?'
+Correct:  True
+----------------------------------------
+
+❌ FAIL | Quotes with ellipsis
+Input:    'he said: 'wait... no, stop!''
+Expected: 'He said: 'wait... no, stop!''
+Actual:   'He said: 'wait... no, stop! ''
+Correct:  False
+----------------------------------------
+
+✅ PASS | URL with ellipsis and exclamation
+Input:    'download from https://site.com... now!'
+Expected: 'Download from https://site.com... now!'
+Actual:   'Download from https://site.com... now!'
+Correct:  True
+----------------------------------------
+
+
+======================================================================
+FILE: TEST_APOSTROPHE_RESULTS.txt
+======================================================================
+
+=== APOSTROPHE NORMALIZATION TEST - 2025-11-25 19:11:54.627882 ===
+PASSED: 16 | FAILED: 6 | TOTAL: 22
+SUCCESS RATE: 72.73%
+
+{"status": "✅ PASS", "description": "Standard apostrophe - should stay", "input": "It's fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Contraction apostrophe - should stay", "input": "Don't worry", "expected": "Don't worry", "actual": "Don't worry", "correct": true}
+{"status": "✅ PASS", "description": "Smart right single quote → standard", "input": "It's fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Smart left single quote → standard", "input": "It's fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Smart quotes in quotes", "input": "He said 'hello'", "expected": "He said 'hello'", "actual": "He said 'hello'", "correct": true}
+{"status": "✅ PASS", "description": "Malformed UTF-8 left quote", "input": "Itâ€˜s fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Malformed UTF-8 right quote", "input": "Itâ€™s fine", "expected": "It's fine", "actual": "It's fine", "correct": true}
+{"status": "✅ PASS", "description": "Malformed UTF-8 in contraction", "input": "Donâ€˜t worry", "expected": "Don't worry", "actual": "Don't worry", "correct": true}
+{"status": "❌ FAIL", "description": "Double-encoded left quote", "input": "ItÃ¢â‚¬Ëœs fine", "expected": "It's fine", "actual": "Itã¢â'¬ëœs fine", "correct": false}
+{"status": "❌ FAIL", "description": "Double-encoded right quote", "input": "ItÃ¢â‚¬â„¢s fine", "expected": "It's fine", "actual": "Itã¢â'¬â„¢s fine", "correct": false}
+{"status": "❌ FAIL", "description": "Mojibake left quote pattern", "input": "Itã¢â‚¬ëœs fine", "expected": "It's fine", "actual": "Itã¢â'¬ëœs fine", "correct": false}
+{"status": "❌ FAIL", "description": "Mojibake right quote pattern", "input": "Itã¢â‚¬â\"¢s fine", "expected": "It's fine", "actual": "Itã¢â'¬â\"¢s fine", "correct": false}
+{"status": "❌ FAIL", "description": "Mojibake possessive", "input": "Userã¢â‚¬â\"¢s data", "expected": "User's data", "actual": "Userã¢â'¬â\"¢s data", "correct": false}
+{"status": "❌ FAIL", "description": "Double-encoded possessive", "input": "UserÃ¢â‚¬â„¢s data", "expected": "User's data", "actual": "Userã¢â'¬â„¢s data", "correct": false}
+{"status": "✅ PASS", "description": "Acute accent → apostrophe", "input": "Don't worry", "expected": "Don't worry", "actual": "Don't worry", "correct": true}
+{"status": "✅ PASS", "description": "Grave accent → apostrophe", "input": "We`ll see", "expected": "We'll see", "actual": "We'll see", "correct": true}
+{"status": "✅ PASS", "description": "Mixed malformed patterns", "input": "Itâ€˜s don't problem", "expected": "It's don't problem", "actual": "It's don't problem", "correct": true}
+{"status": "✅ PASS", "description": "Smart double quotes → standard", "input": "He said \"hello\"", "expected": "He said \"hello\"", "actual": "He said \"hello\"", "correct": true}
+{"status": "✅ PASS", "description": "Smart double quotes → standard", "input": "He said \"hello\"", "expected": "He said \"hello\"", "actual": "He said \"hello\"", "correct": true}
+{"status": "✅ PASS", "description": "Single quotes at boundaries", "input": "'Single quoted'", "expected": "'Single quoted'", "actual": "'Single quoted'", "correct": true}
+{"status": "✅ PASS", "description": "Double quotes at boundaries", "input": "\"Double quoted\"", "expected": "\"Double quoted\"", "actual": "\"Double quoted\"", "correct": true}
+{"status": "✅ PASS", "description": "Multiple malformed apostrophes", "input": "Itâ€˜s a testâ€™s result", "expected": "It's a test's result", "actual": "It's a test's result", "correct": true}
+
+
+======================================================================
+FILE: GRAMMAR_HEURISTICS_TEST.json
+======================================================================
+
+{
+  "timestamp": "2025-11-25T01:30:24.803566",
+  "summary": {
+    "total": 18,
+    "passed": 18,
+    "success_rate": 100.0,
+    "by_category": {
+      "is_are_agreement": "8/8",
+      "missing_articles": "7/7",
+      "combined": "3/3"
+    }
+  },
+  "results": [
+    {
+      "description": "this + are → this + is",
+      "input": "this are wrong",
+      "expected": "This is wrong",
+      "actual": "This is wrong",
+      "passed": true
+    },
+    {
+      "description": "that + are → that + is",
+      "input": "that are correct",
+      "expected": "That is correct",
+      "actual": "That is correct",
+      "passed": true
+    },
+    {
+      "description": "this + were → this + was",
+      "input": "this were bad",
+      "expected": "This was bad",
+      "actual": "This was bad",
+      "passed": true
+    },
+    {
+      "description": "that + were → that + was",
+      "input": "that were good",
+      "expected": "That was good",
+      "actual": "That was good",
+      "passed": true
+    },
+    {
+      "description": "these + is → these + are",
+      "input": "these is wrong",
+      "expected": "These are wrong",
+      "actual": "These are wrong",
+      "passed": true
+    },
+    {
+      "description": "those + is → those + are",
+      "input": "those is correct",
+      "expected": "Those are correct",
+      "actual": "Those are correct",
+      "passed": true
+    },
+    {
+      "description": "these + was → these + were",
+      "input": "these was bad",
+      "expected": "These were bad",
+      "actual": "These were bad",
+      "passed": true
+    },
+    {
+      "description": "those + was → those + were",
+      "input": "those was good",
+      "expected": "Those were good",
+      "actual": "Those were good",
+      "passed": true
+    },
+    {
+      "description": "is + bad sentence → is a bad sentence",
+      "input": "this is bad sentence",
+      "expected": "This is a bad sentence",
+      "actual": "This is a bad sentence",
+      "passed": true
+    },
+    {
+      "description": "is + good idea → is a good idea",
+      "input": "that is good idea",
+      "expected": "That is a good idea",
+      "actual": "That is a good idea",
+      "passed": true
+    },
+    {
+      "description": "is + big problem → is a big problem",
+      "input": "it is big problem",
+      "expected": "It is a big problem",
+      "actual": "It is a big problem",
+      "passed": true
+    },
+    {
+      "description": "was + bad sentence → was a bad sentence",
+      "input": "this was bad sentence",
+      "expected": "This was a bad sentence",
+      "actual": "This was a bad sentence",
+      "passed": true
+    },
+    {
+      "description": "was + good idea → was a good idea",
+      "input": "it was good idea",
+      "expected": "It was a good idea",
+      "actual": "It was a good idea",
+      "passed": true
+    },
+    {
+      "description": "is + important → is an important",
+      "input": "this is important issue",
+      "expected": "This is an important issue",
+      "actual": "This is an important issue",
+      "passed": true
+    },
+    {
+      "description": "was + easy → was an easy",
+      "input": "that was easy task",
+      "expected": "That was an easy task",
+      "actual": "That was an easy task",
+      "passed": true
+    },
+    {
+      "description": "this are → this is + add 'a'",
+      "input": "this are bad sentence",
+      "expected": "This is a bad sentence",
+      "actual": "This is a bad sentence",
+      "passed": true
+    },
+    {
+      "description": "these is → these are + add 'a'",
+      "input": "these is good idea",
+      "expected": "These are a good idea",
+      "actual": "These are a good idea",
+      "passed": true
+    },
+    {
+      "description": "Real mistake: this are + no article",
+      "input": "this are terrible mistake",
+      "expected": "This is a terrible mistake",
+      "actual": "This is a terrible mistake",
+      "passed": true
+    }
+  ]
+}
+
+======================================================================
+FILE: I_CAPITALIZATION_TEST.json
+======================================================================
+
+{
+  "timestamp": "2025-11-25T12:14:48.544849",
+  "summary": {
+    "total_tests": 86,
+    "passed": 86,
+    "success_rate": 100.0,
+    "performance": {
+      "average_response_time_ms": 14.47,
+      "slow_tests_count": 0,
+      "failed_tests_count": 0
+    }
+  },
+  "category_breakdown": {
+    "Basic Standalone": {
+      "passed": 15,
+      "total": 15,
+      "success_rate": 100.0
+    },
+    "Punctuation": {
+      "passed": 15,
+      "total": 15,
+      "success_rate": 100.0
+    },
+    "Contractions": {
+      "passed": 15,
+      "total": 15,
+      "success_rate": 100.0
+    },
+    "Multiple i": {
+      "passed": 10,
+      "total": 10,
+      "success_rate": 100.0
+    },
+    "Edge Cases": {
+      "passed": 15,
+      "total": 15,
+      "success_rate": 100.0
+    },
+    "Chat Patterns": {
+      "passed": 15,
+      "total": 15,
+      "success_rate": 100.0
+    },
+    "Performance": {
+      "passed": 1,
+      "total": 1,
+      "success_rate": 100.0
+    },
+    "Contextual": {
+      "passed": 0,
+      "total": 0,
+      "success_rate": 0
+    }
+  },
+  "failed_tests": [],
+  "slow_tests": [],
+  "all_results": [
+    {
+      "description": "i at sentence start",
+      "input": "i am happy",
+      "expected": "I am happy",
+      "actual": "I am happy",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "i think → I think",
+      "input": "i think so",
+      "expected": "I think so",
+      "actual": "I think so",
+      "passed": true,
+      "response_time": 33.69
+    },
+    {
+      "description": "i + contraction fix",
+      "input": "i dont know",
+      "expected": "I don't know",
+      "actual": "I don't know",
+      "passed": true,
+      "response_time": 17.31
+    },
+    {
+      "description": "i in middle",
+      "input": "yesterday i went home",
+      "expected": "Yesterday I went home",
+      "actual": "Yesterday I went home",
+      "passed": true,
+      "response_time": 19.8
+    },
+    {
+      "description": "when i → when I",
+      "input": "when i was young",
+      "expected": "When I was young",
+      "actual": "When I was young",
+      "passed": true,
+      "response_time": 7.03
+    },
+    {
+      "description": "but i → but I",
+      "input": "but i dont care",
+      "expected": "But I don't care",
+      "actual": "But I don't care",
+      "passed": true,
+      "response_time": 15.92
+    },
+    {
+      "description": "so i → so I",
+      "input": "so i decided",
+      "expected": "So I decided",
+      "actual": "So I decided",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "then i → then I",
+      "input": "then i left",
+      "expected": "Then I left",
+      "actual": "Then I left",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "i have",
+      "input": "i have a car",
+      "expected": "I have a car",
+      "actual": "I have a car",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "i want",
+      "input": "i want to go",
+      "expected": "I want to go",
+      "actual": "I want to go",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "i need",
+      "input": "i need help",
+      "expected": "I need help",
+      "actual": "I need help",
+      "passed": true,
+      "response_time": 33.2
+    },
+    {
+      "description": "i like",
+      "input": "i like pizza",
+      "expected": "I like pizza",
+      "actual": "I like pizza",
+      "passed": true,
+      "response_time": 9.84
+    },
+    {
+      "description": "i can",
+      "input": "i can do it",
+      "expected": "I can do it",
+      "actual": "I can do it",
+      "passed": true,
+      "response_time": 16.03
+    },
+    {
+      "description": "i after period",
+      "input": "hello. i am here",
+      "expected": "Hello. I am here",
+      "actual": "Hello. I am here",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i after question mark",
+      "input": "really? i agree",
+      "expected": "Really? I agree",
+      "actual": "Really? I agree",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i after exclamation",
+      "input": "stop! i mean it",
+      "expected": "Stop! I mean it",
+      "actual": "Stop! I mean it",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "i after comma",
+      "input": "yes, i understand",
+      "expected": "Yes, I understand",
+      "actual": "Yes, I understand",
+      "passed": true,
+      "response_time": 27.83
+    },
+    {
+      "description": "i after comma + well",
+      "input": "well, i think so",
+      "expected": "Well, I think so",
+      "actual": "Well, I think so",
+      "passed": true,
+      "response_time": 8.63
+    },
+    {
+      "description": "i after comma + ok",
+      "input": "ok, i will go",
+      "expected": "Ok, I will go",
+      "actual": "Ok, I will go",
+      "passed": true,
+      "response_time": 15.79
+    },
+    {
+      "description": "i after comma + no",
+      "input": "no, i dont",
+      "expected": "No, I don't",
+      "actual": "No, I don't",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i in quotes",
+      "input": "he said \"i know\"",
+      "expected": "He said \"I know\"",
+      "actual": "He said \"I know\"",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i in single quotes",
+      "input": "'i am here' she said",
+      "expected": "'I am here' she said",
+      "actual": "'I am here' she said",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "i in parentheses",
+      "input": "(i think) it's good",
+      "expected": "(I think) it's good",
+      "actual": "(I think) it's good",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "multiple i with parens",
+      "input": "if i go (and i will)",
+      "expected": "If I go (and I will)",
+      "actual": "If I go (and I will)",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "i'm → I'm",
+      "input": "i'm happy",
+      "expected": "I'm happy",
+      "actual": "I'm happy",
+      "passed": true,
+      "response_time": 18.17
+    },
+    {
+      "description": "i'll → I'll",
+      "input": "i'll be there",
+      "expected": "I'll be there",
+      "actual": "I'll be there",
+      "passed": true,
+      "response_time": 15.32
+    },
+    {
+      "description": "i've → I've",
+      "input": "i've seen it",
+      "expected": "I've seen it",
+      "actual": "I've seen it",
+      "passed": true,
+      "response_time": 2.11
+    },
+    {
+      "description": "i'd → I'd",
+      "input": "i'd like that",
+      "expected": "I'd like that",
+      "actual": "I'd like that",
+      "passed": true,
+      "response_time": 0.48
+    },
+    {
+      "description": "i'm in middle",
+      "input": "yesterday i'm told you",
+      "expected": "Yesterday I'm told you",
+      "actual": "Yesterday I'm told you",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i + i'll combo",
+      "input": "i think i'll go",
+      "expected": "I think I'll go",
+      "actual": "I think I'll go",
+      "passed": true,
+      "response_time": 26.85
+    },
+    {
+      "description": "multiple contractions",
+      "input": "i know i've done it",
+      "expected": "I know I've done it",
+      "actual": "I know I've done it",
+      "passed": true,
+      "response_time": 16.6
+    },
+    {
+      "description": "i'd in condition",
+      "input": "if i'd known",
+      "expected": "If I'd known",
+      "actual": "If I'd known",
+      "passed": true,
+      "response_time": 7.69
+    },
+    {
+      "description": "i'm not",
+      "input": "i'm not sure",
+      "expected": "I'm not sure",
+      "actual": "I'm not sure",
+      "passed": true,
+      "response_time": 16.78
+    },
+    {
+      "description": "i won't",
+      "input": "i won't go",
+      "expected": "I won't go",
+      "actual": "I won't go",
+      "passed": true,
+      "response_time": 16.05
+    },
+    {
+      "description": "i can't",
+      "input": "i can't believe",
+      "expected": "I can't believe",
+      "actual": "I can't believe",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i don't",
+      "input": "i don't know",
+      "expected": "I don't know",
+      "actual": "I don't know",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "i haven't",
+      "input": "i haven't seen",
+      "expected": "I haven't seen",
+      "actual": "I haven't seen",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "double i simple",
+      "input": "i think i am right",
+      "expected": "I think I am right",
+      "actual": "I think I am right",
+      "passed": true,
+      "response_time": 18.55
+    },
+    {
+      "description": "double i know",
+      "input": "i know i should go",
+      "expected": "I know I should go",
+      "actual": "I know I should go",
+      "passed": true,
+      "response_time": 8.21
+    },
+    {
+      "description": "double i wish",
+      "input": "i wish i could",
+      "expected": "I wish I could",
+      "actual": "I wish I could",
+      "passed": true,
+      "response_time": 15.72
+    },
+    {
+      "description": "double i feel",
+      "input": "i feel i need",
+      "expected": "I feel I need",
+      "actual": "I feel I need",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "triple i",
+      "input": "i think i know i can",
+      "expected": "I think I know I can",
+      "actual": "I think I know I can",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "triple i past",
+      "input": "i believe i saw i was",
+      "expected": "I believe I saw I was",
+      "actual": "I believe I saw I was",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "complex triple i",
+      "input": "when i was young i thought i knew everything",
+      "expected": "When I was young I thought I knew everything",
+      "actual": "When I was young I thought I knew everything",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "complex multiple i",
+      "input": "i don't know what i should do or where i should go",
+      "expected": "I don't know what I should do or where I should go",
+      "actual": "I don't know what I should do or where I should go",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "complex conditional i",
+      "input": "if i go and i think i will then i know i can",
+      "expected": "If I go and I think I will then I know I can",
+      "actual": "If I go and I think I will then I know I can",
+      "passed": true,
+      "response_time": 17.64
+    },
+    {
+      "description": "iPhone - NOT pronoun",
+      "input": "iphone is good",
+      "expected": "Iphone is good",
+      "actual": "Iphone is good",
+      "passed": true,
+      "response_time": 16.2
+    },
+    {
+      "description": "'in' word - NOT pronoun i",
+      "input": "in it",
+      "expected": "In it",
+      "actual": "In it",
+      "passed": true,
+      "response_time": 5.92
+    },
+    {
+      "description": "'idea' - NOT pronoun",
+      "input": "idea is good",
+      "expected": "Idea is good",
+      "actual": "Idea is good",
+      "passed": true,
+      "response_time": 16.06
+    },
+    {
+      "description": "'via' - NOT pronoun",
+      "input": "via email",
+      "expected": "Via email",
+      "actual": "Via email",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "'India' - proper noun",
+      "input": "india country",
+      "expected": "India country",
+      "actual": "India country",
+      "passed": true,
+      "response_time": 25.88
+    },
+    {
+      "description": "'italian' - adjective",
+      "input": "pizza with italian",
+      "expected": "Pizza with italian",
+      "actual": "Pizza with italian",
+      "passed": true,
+      "response_time": 11.72
+    },
+    {
+      "description": "i.phone - NOT pronoun",
+      "input": "i.phone",
+      "expected": "I.phone",
+      "actual": "I.phone",
+      "passed": true,
+      "response_time": 14.16
+    },
+    {
+      "description": "i-pad - NOT pronoun",
+      "input": "i-pad",
+      "expected": "I-pad",
+      "actual": "I-pad",
+      "passed": true,
+      "response_time": 1.06
+    },
+    {
+      "description": "i think - SHOULD capitalize",
+      "input": "i think",
+      "expected": "I think",
+      "actual": "I think",
+      "passed": true,
+      "response_time": 16.03
+    },
+    {
+      "description": "mixed I/i correction",
+      "input": "I think i should",
+      "expected": "I think I should",
+      "actual": "I think I should",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "mixed i/I normalization",
+      "input": "i think I should",
+      "expected": "I think I should",
+      "actual": "I think I should",
+      "passed": true,
+      "response_time": 22.95
+    },
+    {
+      "description": "i with numbers",
+      "input": "i have 2 cars",
+      "expected": "I have 2 cars",
+      "actual": "I have 2 cars",
+      "passed": true,
+      "response_time": 13.67
+    },
+    {
+      "description": "i with hashtag",
+      "input": "i #love it",
+      "expected": "I #love it",
+      "actual": "I #love it",
+      "passed": true,
+      "response_time": 12.69
+    },
+    {
+      "description": "i with mention",
+      "input": "i @someone",
+      "expected": "I @someone",
+      "actual": "I @someone",
+      "passed": true,
+      "response_time": 14.65
+    },
+    {
+      "description": "i + your/you're",
+      "input": "i think your right",
+      "expected": "I think you're right",
+      "actual": "I think you're right",
+      "passed": true,
+      "response_time": 14.7
+    },
+    {
+      "description": "i + grammar",
+      "input": "i dont know where he goed",
+      "expected": "I don't know where he went",
+      "actual": "I don't know where he went",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "double i thinking",
+      "input": "i was thinking i should go",
+      "expected": "I was thinking I should go",
+      "actual": "I was thinking I should go",
+      "passed": true,
+      "response_time": 21.49
+    },
+    {
+      "description": "i + tense",
+      "input": "yesterday i go to store",
+      "expected": "Yesterday I went to store",
+      "actual": "Yesterday I went to store",
+      "passed": true,
+      "response_time": 16.05
+    },
+    {
+      "description": "i + omg",
+      "input": "omg i cant believe it",
+      "expected": "Omg I can't believe it",
+      "actual": "Omg I can't believe it",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i + lol",
+      "input": "lol i know right",
+      "expected": "Lol I know right",
+      "actual": "Lol I know right",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i + btw",
+      "input": "btw i think so",
+      "expected": "Btw I think so",
+      "actual": "Btw I think so",
+      "passed": true,
+      "response_time": 17.57
+    },
+    {
+      "description": "why i - tricky case",
+      "input": "why i should go",
+      "expected": "Why I should go",
+      "actual": "Why I should go",
+      "passed": true,
+      "response_time": 20.71
+    },
+    {
+      "description": "how i - tricky case",
+      "input": "how i can help",
+      "expected": "How I can help",
+      "actual": "How I can help",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "when i - should capitalize",
+      "input": "when i can come",
+      "expected": "When I can come",
+      "actual": "When I can come",
+      "passed": true,
+      "response_time": 16.05
+    },
+    {
+      "description": "i + imo",
+      "input": "imo i think its good",
+      "expected": "Imo I think it's good",
+      "actual": "Imo I think it's good",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "i + tbh",
+      "input": "tbh i dont care",
+      "expected": "Tbh I don't care",
+      "actual": "Tbh I don't care",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "i + idk",
+      "input": "idk i guess so",
+      "expected": "Idk I guess so",
+      "actual": "Idk I guess so",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "long paragraph with multiple i",
+      "input": "i think i should tell you that i have been thinking about this for a while and i believe i know what i want to do. i hope you understand that i need to make this decision myself because i feel i am old enough to know what i am doing.",
+      "expected": "I think I should tell you that I have been thinking about this for a while and I believe I know what I want to do. I hope you understand that I need to make this decision myself because I feel I am old enough to know what I am doing.",
+      "actual": "I think I should tell you that I have been thinking about this for a while and I believe I know what I want to do. I hope you understand that I need to make this decision myself because I feel I am old enough to know what I am doing.",
+      "passed": true,
+      "response_time": 15.62
+    },
+    {
+      "description": "mixed content with URLs and emails",
+      "input": "i visited https://example.com yesterday and i think i found what i was looking for. i also checked my email at test@test.com and i think i got the confirmation i needed.",
+      "expected": "I visited https://example.com yesterday and I think I found what I was looking for. I also checked my email at test@test.com and I think I got the confirmation I needed.",
+      "actual": "I visited https://example.com yesterday and I think I found what I was looking for. I also checked my email at test@test.com and I think I got the confirmation I needed.",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "i were → I was",
+      "input": "i were wrong",
+      "expected": "I was wrong",
+      "actual": "I was wrong",
+      "passed": true,
+      "response_time": 23.36
+    },
+    {
+      "description": "pronoun + i combo",
+      "input": "me and i was there",
+      "expected": "I and I were there",
+      "actual": "I and I were there",
+      "passed": true,
+      "response_time": 15.7
+    },
+    {
+      "description": "i is → I am",
+      "input": "i is happy",
+      "expected": "I am happy",
+      "actual": "I am happy",
+      "passed": true,
+      "response_time": 0.0
+    },
+    {
+      "description": "i has → I have",
+      "input": "i has a car",
+      "expected": "I have a car",
+      "actual": "I have a car",
+      "passed": true,
+      "response_time": 15.63
+    },
+    {
+      "description": "between you and i",
+      "input": "between you and i",
+      "expected": "Between you and I",
+      "actual": "Between you and I",
+      "passed": true,
+      "response_time": 36.62
+    },
+    {
+      "description": "it was i",
+      "input": "it was i who called",
+      "expected": "It was I who called",
+      "actual": "It was I who called",
+      "passed": true,
+      "response_time": 12.21
+    },
+    {
+      "description": "i myself",
+      "input": "i myself think",
+      "expected": "I myself think",
+      "actual": "I myself think",
+      "passed": true,
+      "response_time": 5.33
+    },
+    {
+      "description": "for i",
+      "input": "for i know",
+      "expected": "For I know",
+      "actual": "For I know",
+      "passed": true,
+      "response_time": 15.66
+    },
+    {
+      "description": "and i",
+      "input": "and i think",
+      "expected": "And I think",
+      "actual": "And I think",
+      "passed": true,
+      "response_time": 19.1
+    },
+    {
+      "description": "or i",
+      "input": "or i could",
+      "expected": "Or I could",
+      "actual": "Or I could",
+      "passed": true,
+      "response_time": 16.06
+    },
+    {
+      "description": "but i",
+      "input": "but i thought",
+      "expected": "But I thought",
+      "actual": "But I thought",
+      "passed": true,
+      "response_time": 15.63
+    }
+  ]
+}
